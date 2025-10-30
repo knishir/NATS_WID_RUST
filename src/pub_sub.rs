@@ -1,3 +1,27 @@
-fn main() {
-    println!("Hello, PUB_SUB");
+use futures::StreamExt;
+use std::env;
+use std::str::from_utf8;
+
+#[tokio::main]
+async fn main() -> Result<(), async_nats::Error> {
+    let nats_url = env::var("NATS_URL")
+    .unwrap_or_else(|_| "localhost:4222".to_string());
+
+    let client = async_nats::connect(nats_url).await?;
+    client.publish("Barak.Obama", "HELLO FROM RUST!".into()).await?;
+
+    let mut subscription = client.subscribe("Barak.*").await?.take(3);
+
+    for subject in ["Barak.Obama", "Barak.Michelle", "Barak.Sasha"] {
+        client.publish(subject, "HELLO FROM RUST!".into()).await?;
+    }
+
+    while let Some(message) = subscription.next().await {
+        match from_utf8(message.payload.as_ref()) {
+            Ok(text) => println!("{} received on {}", text, message.subject),
+            Err(_) => println!("<binary> received on {} ({} bytes)", message.subject, message.payload.len()),
+        }
+    }
+
+    Ok(())
 }
