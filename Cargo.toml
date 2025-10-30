@@ -1,0 +1,18 @@
+[package]
+name = "Nats_ka_rust"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "pub_sub"
+path = "src/pub_sub.rs"
+
+[[bin]]
+name = "relay"
+path = "src/relay.rs"
+
+[[bin]]
+name = "request"
+path = "src/request.rs"
+
+[dependencies]
