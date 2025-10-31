@@ -12,7 +12,7 @@ async fn main() -> Result<(), async_nats::Error> {
 
     while let Some(request) = requests.next().await {
         if let Some(reply) = request.reply {
-            let name = &request.subject[6..];
+            let name = &request.subject[0..];
             client
                 .publish(reply, format!("hello, {}", name).into())
                 .await?;
