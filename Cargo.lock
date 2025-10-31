@@ -9,6 +9,8 @@ dependencies = [
  "async-nats",
  "bytes",
  "futures",
+ "serde",
+ "serde_json",
  "tokio",
 ]
 
