@@ -1,14 +1,15 @@
 use futures::StreamExt;
 use std::env;
-use std::str::from_utf8;
+use std::str::from_utf8; // FOR CONVERTING BYTES TO STRING
 
 #[tokio::main]
 async fn main() -> Result<(), async_nats::Error> {
+// LOOKS FOR NATS_URL IN ENVIRONMENT VARIABLES IF NOT THEN USES DEFAULT
     let nats_url = env::var("NATS_URL")
     .unwrap_or_else(|_| "localhost:4222".to_string());
 
     let client = async_nats::connect(nats_url).await?;
-    client.publish("Barak.Obama", "HELLO FROM RUST!".into()).await?;
+    client.publish("Barak.*", "HELLO FROM RUST!".into()).await?;
 
     let mut subscription = client.subscribe("Barak.*").await?.take(3);
 
