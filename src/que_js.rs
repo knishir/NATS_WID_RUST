@@ -4,13 +4,14 @@ use futures::{StreamExt, TryStreamExt};
 
 #[tokio::main]
 async fn main() -> Result<(), async_nats::Error> {
-    let nats_url = std::env::var("NATS_URL")
+    let nats_url = std::env::var("NATS_URL") //connection to nats
         .unwrap_or_else(|_| "nats://localhost:4222".to_string());
     let client = async_nats::connect(nats_url).await?;
 
-
+    // create a context
     let jetstream = jetstream::new(client);
 
+    // create a stream and configuring
     let mut stream = jetstream.create_stream(stream::Config {
         name: "EVENTS".to_string(),
         retention: stream::RetentionPolicy::WorkQueue,
@@ -19,12 +20,13 @@ async fn main() -> Result<(), async_nats::Error> {
 }).await?;
 println!("Created the stream");
 
+// print some messages
 jetstream.publish("events.us.page_loaded","".into()).await?.await?;
 jetstream.publish("events.us.mouse_clicked","".into()).await?.await?;
 jetstream.publish("events.us.input_focused","".into()).await?.await?;
 println!("Published 3 messages");
 
-
+// created consumer and configureing
 println!("Stream info without any consumer: {:#?}",stream.info().await?);
 
 let consumer = stream.create_consumer(jetstream::consumer::pull::Config { durable_name: Some("processor-1".to_string()), ..Default::default() }).await?;
