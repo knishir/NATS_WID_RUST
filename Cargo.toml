@@ -19,6 +19,10 @@ path = "src/request.rs"
 name = "que_js"
 path = "src/que_js.rs"
 
+[[bin]]
+name = "int_stream"
+path = "src/int_stream.rs"
+
 [dependencies]
 async-nats = "0.44.2"
 tokio = { version = "1.39.0", features = ["full"] }

@@ -1,0 +1,24 @@
+{
+  "models": [
+    {
+      "title": "Llama 3.1 8B (Local via Ollama)",
+      "provider": "ollama",
+      "model": "llama3.1:8b"
+    },
+    {
+      "title": "CodeLlama (Local via Ollama)",
+      "provider": "ollama",
+      "model": "codellama:latest"
+    },
+    {
+      "title": "Mistral (Local via Ollama)",
+      "provider": "ollama",
+      "model": "mistral:latest"
+    },
+    {
+      "title": "Qwen 2.5 Coder (Local via Ollama)",
+      "provider": "ollama",
+      "model": "qwen2.5-coder:7b"
+    }
+  ]
+}
