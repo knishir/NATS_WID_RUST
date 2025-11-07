@@ -12,6 +12,10 @@ name = "relay"
 path = "src/relay.rs"
 
 [[bin]]
+name = "op_ac_user"
+path = "src/op_ac_user.rs"
+
+[[bin]]
 name = "request"
 path = "src/request.rs"
 
@@ -24,9 +28,11 @@ name = "int_stream"
 path = "src/int_stream.rs"
 
 [dependencies]
-async-nats = "0.44.2"
+async-nats = "0.45.0"
 tokio = { version = "1.39.0", features = ["full"] }
 futures = "0.3.28"
 bytes = "1.4.0"
 serde = { version = "1.0.188", features = ["derive"] }
 serde_json = "1.0.107"
+tokio-tungstenite = "0.20.0"
+nkeys = "0.4.5"
